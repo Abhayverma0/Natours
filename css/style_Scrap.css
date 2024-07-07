@@ -1,0 +1,273 @@
+/*
+COLORS:
+
+background-image: linear-gradient(
+      to right bottom,
+      pink,
+      rgba(40, 180, 133, 0.8)
+    ),
+
+Light green: #7ed56f
+Medium green: #55c57a
+Dark green: #28b485
+
+*/
+
+/* 6. Building the header part 1 */
+/* Reset */
+/* *(asterisk) is the universal selector in CSS */
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+  /*  this changes the box modle and removes the margin and padding applied to the box */
+}
+/* By default browsers apply certain margins and padding, etc. to the element here we're simply removing it */
+
+/* The properties related to font is inherited */
+
+html {
+  /* font-size: 10px; */
+  /* 1rem = root font size(10 here) */
+
+  /* we usually define the root font size in % because in that way the user can change the font size */
+  font-size: 62.5%;
+}
+
+body {
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  /* this increase the line height 1.7 times  */
+  line-height: 1.7;
+  color: #777;
+  padding: 3rem;
+  box-sizing: border-box;
+}
+
+.header {
+  height: 95vh; /* Every point the height of the element is 95% of the viewport height */
+  background-image: linear-gradient(
+      to right bottom,
+      rgba(85, 197, 122, 0.8),
+      rgba(40, 180, 133, 0.8)
+    ),
+    url(../img/hero.jpg); /* can add multiple background images comma seperated here we want the gradient to lay atop of the image hence the gradient is passed before */
+  background-size: cover; /* Whatever the width of the element, cover Always try to fit the element inside the box */
+  background-position: top; /* top,bottom,center,etc., For top -> it insures that whatever the viewport size is the top of the image always stays at the top of the container */
+
+  position: relative;
+  /* polygon(x y, x y, x y, ......) add the n numbers of co ordinates to create the reuired shape */
+  clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
+}
+
+/* 7. Building the header part 2 */
+.header__logo-box {
+  position: absolute;
+  /* The origin starts from the parent element the parent element of this element is the header and hence we added position: relative; on it */
+  top: 4rem;
+  left: 4rem;
+}
+
+.header__logo {
+  height: 3.5rem;
+}
+
+/* .logo:hover {
+  animation: moveInLeft 1s ease-out;
+} */
+
+.header__text-box {
+  position: absolute;
+  /* changes the position according to the below percentages */
+  top: 40%; /* moves 50% to the top it's 50% of the height of the parent element */
+  left: 50%; /* moves 50% to the left it's 50% of the width of the parent element */
+  transform: translate(
+    -50%,
+    -50%
+  ); /* these -50% is no longer in relation with the parent element but is in relation with itself */
+  text-align: center;
+}
+
+.heading-primary {
+  color: #fff;
+  text-transform: uppercase;
+
+  /* After the end of the animation sometimes the element moves a little higher with a shake so to prevent this we use the below in the parent element if more than one child is using the animations */
+  /* No one knows wht=y the shaking happens or why the below code fixes it */
+  backface-visibility: hidden;
+  /* with this the back part of the element gets hidden for example when we move an element 180 degrees than the back part will be hidden */
+  margin-bottom: 60px;
+}
+
+/* by displaying as block level elements as they occupy the entire width that they have availabe and also they create line breaks after and before them */
+.heading-primary--main {
+  display: block;
+  font-size: 6rem;
+  font-weight: 400;
+  letter-spacing: 3.5rem;
+
+  animation-name: moveInLeft;
+  animation-duration: 1s;
+  animation-timing-function: ease-out; /* specifies how a CSS animation should progress over the duration of each cycle */
+  /* animation-iteration-count: 3; Animation will occour 3 times */
+  /* animation-name: 3s; Before an animation starts it'll wait for the time in seconds provided here */
+}
+
+.heading-primary--sub {
+  display: block;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 1.75rem;
+
+  /* animation-name: moveInRight;
+  animation-duration: 1s;
+  animation-timing-function: ease-out; */
+
+  animation: moveInRight 1s ease-out;
+}
+
+/* 8. Creating Cool CSS Animations */
+/* @keyframes animationName */
+/* In browsers always play with either opacity or the transform property */
+@keyframes moveInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(
+      -10rem
+    ); /* moves the component to right by 100px in x direction */
+  }
+
+  80% {
+    transform: translateX(
+      1rem
+    ); /* moves the component to left by 10px in x direction */
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0); /* It's gonna look the way it looks originally */
+  }
+}
+
+@keyframes moveInRight {
+  0% {
+    opacity: 0;
+    transform: translateX(
+      10rem
+    ); /* moves the component to left by 100px in x direction */
+  }
+  /* 50% {
+    transform: rotate(120deg);
+  } */
+  80% {
+    transform: translateX(
+      -1rem
+    ); /* moves the component to right by 10px in x direction */
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0); /* It's gonna look the way it looks originally */
+  }
+}
+
+/* 9: Building an Animated Button - Part 1 */
+
+/* btn:link since we write button as a link using the anchor tag
+  and here :link is a link pseudo class
+  psedu classes are special states of a selector
+  so here :link is a special state of a selector (here button .btn element) when it is an anchor element it functions as a link
+  we use pseduo classes to style elements in special state
+
+  .btn:visited -> this is the state whwn the suer has clicked on the button(element) before then sees the button again so that's the visited state
+  When you visit a website and click on a button, the button's appearance can change to indicate that you have interacted with it. This could be done by changing the color, background, or other visual aspects of the button. The `.btn:visited` code is a way to specify how these visited buttons should look different from the ones that haven't been clicked yet.
+*/
+.btn:link,
+.btn:visited {
+  text-transform: uppercase;
+  text-decoration: none;
+  /* padding: top-bottom left-right ; */
+  /* padding: top right bottom left ; */
+  padding: 1.5rem 4rem;
+  display: inline-block;
+  /* display: inline-block; this way the box model works as if it was a normal box element . Do this when you want to give some height,width, padding ,etc to the elemnt */
+  border-radius: 20rem;
+  transition: all 0.2s; /* transition property has to be on initial state */
+
+  /* pseudo button element has its position set to absolute with respect to .btn */
+  position: relative;
+  font-size: 1.6re;
+}
+
+.btn:hover {
+  transform: translateY(
+    -3px
+  ); /* in css the Y axis moves from top to bottom so to move up we have to specify a negative value */
+  /* box-shadow: size-in-x-direction   size-in-y-direction   blur  color(rgba); */
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2); /* farther away illusion */
+}
+
+/* .btn:active -> The ":active" pseudo-class allows you to specify the styles that should be applied to the button or element while it is in the active state, meaning when it is being pressed down. */
+.btn:active {
+  transform: translateY(-1px);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2); /* closer away illusion */
+}
+
+.btn--white {
+  background: white;
+  color: #777;
+}
+
+/* 10. Building a complex Animated Button - pqrt 2
+ */
+
+/* Pseudo elements allows us to style certain parts of elements */
+/* .btn::after{} -> :: after{} pseudo element adds like a virtual element exactly like the element we have right after the element that we are selecting(.btn in this case) and then style this element */
+.btn::after {
+  content: ""; /* this is a required property for the pseudo element to appear on the page -> you can provide any text or keep it empty like in this case */
+  display: inline-block; /* this property is also required otherwise the pseudo element will not appear on the page -> display can be anything here we make it an inline-block as the .btn element is also an inline-block */
+  height: 100%; /* this 100% is with respect to the parent element here it is the .btn element -> means it is 100% the height of the .btn element (same dimensions as the .btn element) */
+  width: 100%; /* this 100% is with respect to the parent element here it is the .btn element -> means it is 100% the width of the .btn element (same dimensions as the .btn element) */
+
+  border-radius: 20rem;
+
+  /* To put it behind the btn element */
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1; /* z-index defines the position of elements if they're one atop of another -> setting it to -1 makes sure that the pseudo button element is behind the .btn element */
+
+  transition: all 0.4s;
+}
+
+/* have to create a new pseudo element for .btn-white as well */
+.btn--white::after {
+  background: white;
+}
+
+/* when we hover the .btn we want some style for the after pseudo element(here the pseudo button) */
+.btn:hover::after {
+  transform: scaleX(1.4) scaleY(1.6);
+  opacity: 0;
+}
+
+/* Put the below animation on this button only */
+.btn--animated {
+  /* animation: name duration timing-function delay (we are not using these here : iteration-count direction fill-mode); */
+  animation: moveInBottom 0.5s ease-out 0.75s;
+  animation-fill-mode: backwards; /* it will automatically apply the styles of 0% to the element(here the .btn and pseudo button) before the animation starts */
+}
+
+/* for the motion of button  */
+@keyframes moveInBottom {
+  0% {
+    opacity: 0;
+    transform: translateY(3rem);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0); /* It's gonna look the way it looks originally */
+  }
+}
